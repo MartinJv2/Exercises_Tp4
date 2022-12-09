@@ -93,7 +93,7 @@ elif choix_exercise == 4:
 elif choix_exercise == 5:
 
     @dataclasses.dataclass
-    class AttributsDnd:
+    class AttributsPersonnage:
         force: int = randint(1, 20)
         dexterite: int = randint(1, 20)
         constitution: int = randint(1, 20)

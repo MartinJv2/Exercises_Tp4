@@ -2,13 +2,14 @@
 Fait par : Jeremy Martin
 Groupe : 403
 Le code va effectuer une serie d'exercises sur les classes dependament du choix de la personne qui le roule
+(les exercises 4 et 5 sont dans le dernier)
 """
 
 from math import pi
 from random import randint
 import dataclasses
 
-choix_exercise = int(input("Choisissez un exercise (1-6)"))
+choix_exercise = int(input("Choisissez un exercise (1-4)"))
 
 if choix_exercise == 1:
     class StringFoo:
@@ -56,82 +57,48 @@ elif choix_exercise == 3:
             return 2 * pi * self.rayon
 
 
-    attributs_cercle = Cercle(int(input("Rayon")))
+    attributs_cercle = Cercle(5)
     print("Aire", attributs_cercle.calcul_aire())
     print("Circonference", attributs_cercle.calcul_circonference())
 
-elif choix_exercise == 4:
-    class Hero:
 
+else:
+    @dataclasses.dataclass
+    class Creature:
+        force: int = randint(1, 20)
+        dexterite: int = randint(1, 20)
+        constitution: int = randint(1, 20)
+        sagesse: int = randint(1, 20)
+        charisme: int = randint(1, 20)
+        inteligence: int = randint(1, 20)
+
+
+    class Hero:
         def __init__(self, nom_hero):
             self.nom_hero = nom_hero
             self.nombre_vies = randint(1, 10) + randint(1, 10)
             self.vies_initial = self.nombre_vies
             self.force_attaque = randint(1, 6)
             self.force_defence = randint(1, 6)
+            self.stats = Creature()
 
         def attaque(self):
             return self.force_attaque + randint(1, 6)
 
         def dommages(self, dommages):
-            self.nombre_vies -= dommages - self.force_defence
-            return self.nombre_vies
-
-        def est_vivant(self):
-            if self.nombre_vies > 0:
-                return True
-            else:
-                return False
-
-
-    gennal = Hero("Gennal")
-    print(
-        f"il reste a {gennal.nom_hero} {gennal.dommages(10)} vies apres avoir pris 10 dommage"
-        f"\nnen vie : {gennal.est_vivant()}"
-        f"(il y en avait {gennal.vies_initial} vies et {gennal.force_defence} defence au depart)")
-
-elif choix_exercise == 5:
-
-    @dataclasses.dataclass
-    class AttributsPersonnage:
-        force: int = randint(1, 20)
-        dexterite: int = randint(1, 20)
-        constitution: int = randint(1, 20)
-        sagesse: int = randint(1, 20)
-        charisme: int = randint(1, 20)
-
-
-else:
-    class Hero:
-
-        def __init__(self, nom_hero, charisme):
-            self.nom_hero = nom_hero
-            self.nombre_vies = randint(1, 10) + randint(1, 10)
-            self.vies_initial = self.nombre_vies
-            self.force_attaque = randint(1, 6)
-            self.force_defence = randint(1, 6)
-            self.charisme = charisme
-
-        def attaque(self):
-            return self.force_attaque + randint(1, 6)
-
-        def dommages(self, dommages):
-            if self.charisme >= 15:
+            if self.stats.charisme >= 15:
                 return self.nombre_vies
             else:
                 self.nombre_vies -= dommages - self.force_defence
                 return self.nombre_vies
 
         def est_vivant(self):
-            if self.nombre_vies > 0:
-                return True
-            else:
-                return False
+            return self.nombre_vies > 0
 
 
-    gennal = Hero("Gennal", randint(1, 20))
+    gennal = Hero("Gennal")
     print(f"Vous faites une attaque de force  {gennal.attaque()}")
     print(
         f"il reste a {gennal.nom_hero} {gennal.dommages(10)} vies apres avoir pris 10 dommage"
-        f"\nnen vie : {gennal.est_vivant()}"
+        f"\nen vie : {gennal.est_vivant()}\n"
         f"(il y en avait {gennal.vies_initial} vies et {gennal.force_defence} defence au depart)")

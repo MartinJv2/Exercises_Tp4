@@ -1,7 +1,8 @@
 from math import pi
 from random import randint
+import dataclasses
 
-choix_exercise = int(input("Choisissez un exercise (1-4)"))
+choix_exercise = int(input("Choisissez un exercise (1-6)"))
 
 if choix_exercise == 1:
     class StringFoo:
@@ -19,7 +20,7 @@ if choix_exercise == 1:
     message_du_jeu.set_string(input("message : "))
     message_du_jeu.print_string()
 
-if choix_exercise == 2:
+elif choix_exercise == 2:
     class Rectangle:
         def __init__(self, longueur, largeur):
             self.longueur = longueur
@@ -28,16 +29,16 @@ if choix_exercise == 2:
 
         def calcul_aire(self):
             self.aire = self.longueur * self.largeur
-            return aire
 
         def afficher_infos(self):
-            print(f'Largeur : {self.largeur} Longueur : {self.longueur} Aire = {self.largeur*self.longueur}')
+            print(f'Largeur : {self.largeur} Longueur : {self.longueur} Aire = {self.aire}')
 
 
     aire = Rectangle(int(input("Longueur")), int(input("Largeur")))
+    aire.calcul_aire()
     aire.afficher_infos()
 
-if choix_exercise == 3:
+elif choix_exercise == 3:
     class Cercle:
         def __init__(self, rayon):
             self.rayon = rayon
@@ -54,7 +55,7 @@ if choix_exercise == 3:
     attributs_cercle.aire = attributs_cercle.calcul_aire()
     print("Circonference", attributs_cercle.calcul_circonference())
 
-if choix_exercise == 4:
+elif choix_exercise == 4:
     class Hero:
 
         def __init__(self, nom_hero):
@@ -67,12 +68,60 @@ if choix_exercise == 4:
             return self.force_attaque + randint(1, 6)
 
         def dommages(self, dommages):
-            return dommages - self.force_defence
+            self.nombre_vies -= dommages - self.force_defence
+            return self.nombre_vies
 
         def est_vivant(self):
-            return bool()
+            if self.nombre_vies > 0:
+                return True
+            else:
+                return False
 
 
-    gennal = Hero
-    print("Une attaque de force ",gennal.attaque)
-    print(f"il vous reste {gennal.nombre_vies - gennal.dommages} vies")
+    gennal = Hero("Gennal")
+    print(f"Vous faites une attaque de force  {gennal.attaque()}")
+    print(f"il reste a {gennal.nom_hero} {gennal.dommages(int(input('Nombre attaque de lennemie')))} vies")
+
+elif choix_exercise == 5:
+
+    @dataclasses.dataclass
+    class AttributsDnd:
+        force: int = randint(1, 20)
+        dexterite: int = randint(1, 20)
+        constitution: int = randint(1, 20)
+        sagesse: int = randint(1, 20)
+        charisme: int = randint(1, 20)
+
+else:
+    class Hero:
+
+        def __init__(self, nom_hero, charisme):
+            self.nom_hero = nom_hero
+            self.nombre_vies = randint(1, 10) + randint(1, 10)
+            self.vies_initial = self.nombre_vies
+            self.force_attaque = randint(1, 6)
+            self.force_defence = randint(1, 6)
+            self.charisme = charisme
+
+        def attaque(self):
+            return self.force_attaque + randint(1, 6)
+
+        def dommages(self, dommages):
+            if self.charisme >= 15:
+                return 0
+            else:
+                self.nombre_vies -= dommages - self.force_defence
+                return self.nombre_vies
+
+        def est_vivant(self):
+            if self.nombre_vies > 0:
+                return True
+            else:
+                return False
+
+
+    gennal = Hero("Gennal", randint(1, 20))
+    print(f"Vous faites une attaque de force  {gennal.attaque()}")
+    print(
+        f"il reste a {gennal.nom_hero} {gennal.dommages(int(input('Nombre attaque de lennemie')))} vies "
+        f"(il y en avait {gennal.vies_initial} vies et {gennal.force_defence} defence au depart)")

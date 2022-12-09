@@ -1,3 +1,9 @@
+"""
+Fait par : Jeremy Martin
+Groupe : 403
+Le code va effectuer une serie d'exercises sur les classes dependament du choix de la personne qui le roule
+"""
+
 from math import pi
 from random import randint
 import dataclasses
@@ -7,7 +13,7 @@ choix_exercise = int(input("Choisissez un exercise (1-6)"))
 if choix_exercise == 1:
     class StringFoo:
         def __init__(self):
-            self.message = "Salut et bienvenu a mon code"
+            self.message = ""
 
         def set_string(self, string):
             self.message = string
@@ -17,7 +23,7 @@ if choix_exercise == 1:
 
 
     message_du_jeu = StringFoo()
-    message_du_jeu.set_string(input("message : "))
+    message_du_jeu.set_string("Salut et bienvenu a mon code")
     message_du_jeu.print_string()
 
 elif choix_exercise == 2:
@@ -34,7 +40,7 @@ elif choix_exercise == 2:
             print(f'Largeur : {self.largeur} Longueur : {self.longueur} Aire = {self.aire}')
 
 
-    aire = Rectangle(int(input("Longueur")), int(input("Largeur")))
+    aire = Rectangle(5, 6)
     aire.calcul_aire()
     aire.afficher_infos()
 
@@ -52,7 +58,6 @@ elif choix_exercise == 3:
 
     attributs_cercle = Cercle(int(input("Rayon")))
     print("Aire", attributs_cercle.calcul_aire())
-    attributs_cercle.aire = attributs_cercle.calcul_aire()
     print("Circonference", attributs_cercle.calcul_circonference())
 
 elif choix_exercise == 4:
@@ -61,6 +66,7 @@ elif choix_exercise == 4:
         def __init__(self, nom_hero):
             self.nom_hero = nom_hero
             self.nombre_vies = randint(1, 10) + randint(1, 10)
+            self.vies_initial = self.nombre_vies
             self.force_attaque = randint(1, 6)
             self.force_defence = randint(1, 6)
 
@@ -79,8 +85,10 @@ elif choix_exercise == 4:
 
 
     gennal = Hero("Gennal")
-    print(f"Vous faites une attaque de force  {gennal.attaque()}")
-    print(f"il reste a {gennal.nom_hero} {gennal.dommages(int(input('Nombre attaque de lennemie')))} vies")
+    print(
+        f"il reste a {gennal.nom_hero} {gennal.dommages(10)} vies apres avoir pris 10 dommage"
+        f"\nnen vie : {gennal.est_vivant()}"
+        f"(il y en avait {gennal.vies_initial} vies et {gennal.force_defence} defence au depart)")
 
 elif choix_exercise == 5:
 
@@ -91,6 +99,7 @@ elif choix_exercise == 5:
         constitution: int = randint(1, 20)
         sagesse: int = randint(1, 20)
         charisme: int = randint(1, 20)
+
 
 else:
     class Hero:
@@ -108,7 +117,7 @@ else:
 
         def dommages(self, dommages):
             if self.charisme >= 15:
-                return 0
+                return self.nombre_vies
             else:
                 self.nombre_vies -= dommages - self.force_defence
                 return self.nombre_vies
@@ -123,5 +132,6 @@ else:
     gennal = Hero("Gennal", randint(1, 20))
     print(f"Vous faites une attaque de force  {gennal.attaque()}")
     print(
-        f"il reste a {gennal.nom_hero} {gennal.dommages(int(input('Nombre attaque de lennemie')))} vies "
+        f"il reste a {gennal.nom_hero} {gennal.dommages(10)} vies apres avoir pris 10 dommage"
+        f"\nnen vie : {gennal.est_vivant()}"
         f"(il y en avait {gennal.vies_initial} vies et {gennal.force_defence} defence au depart)")

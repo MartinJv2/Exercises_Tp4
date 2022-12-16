@@ -2,7 +2,7 @@
 Fait par : Jeremy Martin
 Groupe : 403
 Le code va effectuer une serie d'exercises sur les classes dependament du choix de la personne qui le roule
-(les exercises 4 et 5 sont dans le dernier)
+(les exercises 4 et 5 sont dans le dernier :) )
 """
 
 from math import pi

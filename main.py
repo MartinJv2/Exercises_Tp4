@@ -64,7 +64,7 @@ elif choix_exercise == 3:
 
 else:
     @dataclasses.dataclass
-    class Creature:
+    class StatsCreature:
         force: int = randint(1, 20)
         dexterite: int = randint(1, 20)
         constitution: int = randint(1, 20)
@@ -80,13 +80,13 @@ else:
             self.vies_initial = self.nombre_vies
             self.force_attaque = randint(1, 6)
             self.force_defence = randint(1, 6)
-            self.stats = Creature()
+            self.stats = StatsCreature()
 
         def attaque(self):
             return self.force_attaque + randint(1, 6)
 
         def dommages(self, dommages):
-            if self.stats.charisme >= 15:
+            if self.stats.constitution >= 15:
                 return self.nombre_vies
             else:
                 self.nombre_vies -= dommages - self.force_defence
